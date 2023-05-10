@@ -1,5 +1,7 @@
 # Book-Notes-Sync
 
+![example workflow](https://github.com/goromal/book-notes-sync/actions/workflows/test.yml/badge.svg)
+
 ## Commands
 
 ```bash
