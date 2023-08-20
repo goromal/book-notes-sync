@@ -1,10 +1,10 @@
 import logging
 import sys
-from googleapiclient.errors import HttpError
 from typing import List, Tuple
 from wiki_tools.wiki import WikiTools
 
-from book_notes_sync.auth import getDocsService
+from easy_google_auth.auth import getGoogleService
+
 from book_notes_sync.defaults import BookNotesSyncDefaults as BNSD
 from book_notes_sync.parsers import extractElements
 
@@ -20,7 +20,7 @@ def syncBookNotes(sync_ids: List[Tuple[str, str]], **kwargs) -> None:
         logging.basicConfig(level=logging.INFO)
         logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
     
-    service = getDocsService(docs_secrets_file, docs_refresh_token, docs_scope)
+    service = getGoogleService("docs", "v1", docs_secrets_file, docs_refresh_token, docs_scope)
 
     wikitools = WikiTools(wiki_url=wiki_url, wiki_secrets_file=wiki_secrets_file, enable_logging=enable_logging)
 
@@ -30,7 +30,7 @@ def syncBookNotes(sync_ids: List[Tuple[str, str]], **kwargs) -> None:
             logging.info(f"Synchronizing {docs_id} -> {wiki_id}")
         try:
             document = service.documents().get(documentId=docs_id).execute()
-        except HttpError as err:
+        except Exception as err:
             if enable_logging:
                 logging.error(err)
                 continue
