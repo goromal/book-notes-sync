@@ -1,5 +1,6 @@
 import click
 import csv
+import os
 
 from book_notes_sync.defaults import BookNotesSyncDefaults as BNSD
 from book_notes_sync.sync import syncBookNotes
@@ -82,7 +83,8 @@ def sync(ctx: click.Context, docs_id, page_id):
     "--sync-csv",
     "sync_csv",
     type=click.Path(exists=True),
-    required=True,
+    default=os.path.expanduser("~/configs/book-notes.csv"),
+    show_default=True,
     help="CSV specifying (docs-id, page-id) pairs.",
 )
 def sync_from_csv(ctx: click.Context, sync_csv):
