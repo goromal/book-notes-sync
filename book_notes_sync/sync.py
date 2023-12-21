@@ -20,7 +20,9 @@ def syncBookNotes(sync_ids: List[Tuple[str, str]], **kwargs) -> None:
         logging.basicConfig(level=logging.INFO)
         logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
     
-    service = getGoogleService("docs", "v1", docs_secrets_file, docs_refresh_token, docs_scope)
+    service = getGoogleService("docs", "v1", docs_secrets_file, docs_refresh_token, docs_scope, headless=True)
+    if service is None:
+        raise Exception(f"Expired credentials at {docs_refresh_token}")
 
     wikitools = WikiTools(wiki_url=wiki_url, wiki_secrets_file=wiki_secrets_file, enable_logging=enable_logging)
 
