@@ -74,7 +74,11 @@ def cli(ctx: click.Context, docs_secrets_file, docs_refresh_token, wiki_url, wik
 )
 def sync(ctx: click.Context, docs_id, page_id):
     """Sync a single Google Doc with a single DokuWiki page."""
-    syncBookNotes([(docs_id, page_id)], **ctx.obj)
+    try:
+        syncBookNotes([(docs_id, page_id)], **ctx.obj)
+    except Exception as e:
+        print(f"Program error: {e}")
+        exit(1)
 
 @cli.command()
 @click.pass_context
@@ -89,7 +93,11 @@ def sync_from_csv(ctx: click.Context, sync_csv):
     """Sync a list of Google Docs with DokuWiki pages from a CSV."""
     with open(sync_csv, "r") as csvfile:
         reader = csv.reader(csvfile)
-        syncBookNotes([(line[0], line[1]) for line in reader], **ctx.obj)
+        try:
+            syncBookNotes([(line[0], line[1]) for line in reader], **ctx.obj)
+        except Exception as e:
+            print(f"Program error: {e}")
+            exit(1)
 
 def main():
     cli()
