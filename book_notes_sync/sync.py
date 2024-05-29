@@ -11,7 +11,6 @@ from book_notes_sync.parsers import extractElements
 def syncBookNotes(sync_ids: List[Tuple[str, str]], **kwargs) -> None:
     docs_secrets_file = BNSD.getKwargsOrDefault("docs_secrets_file", **kwargs)
     docs_refresh_token = BNSD.getKwargsOrDefault("docs_refresh_token", **kwargs)
-    docs_scope = BNSD.getKwargsOrDefault("docs_scope", **kwargs)
     wiki_url = BNSD.getKwargsOrDefault("wiki_url", **kwargs)
     wiki_secrets_file = BNSD.getKwargsOrDefault("wiki_secrets_file", **kwargs)
     enable_logging = BNSD.getKwargsOrDefault("enable_logging", **kwargs)
@@ -20,7 +19,7 @@ def syncBookNotes(sync_ids: List[Tuple[str, str]], **kwargs) -> None:
         logging.basicConfig(level=logging.INFO)
         logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
     
-    service = getGoogleService("docs", "v1", docs_secrets_file, docs_refresh_token, docs_scope, headless=True)
+    service = getGoogleService("docs", "v1", docs_secrets_file, docs_refresh_token, headless=True)
 
     wikitools = WikiTools(wiki_url=wiki_url, wiki_secrets_file=wiki_secrets_file, enable_logging=enable_logging)
 
