@@ -1,10 +1,10 @@
 import os
 
 class BookNotesSyncDefaults:
-    DOCS_SECRETS_FILE = os.path.expanduser("~/secrets/google/client_secrets.json")
-    DOCS_REFRESH_TOKEN = os.path.expanduser("~/secrets/google/refresh.json")
+    DOCS_SECRETS_FILE = "~/secrets/google/client_secrets.json"
+    DOCS_REFRESH_TOKEN = "~/secrets/google/refresh.json"
     WIKI_URL = "https://notes.andrewtorgesen.com"
-    WIKI_SECRETS_FILE = os.path.expanduser("~/secrets/wiki/secrets.json")
+    WIKI_SECRETS_FILE = "~/secrets/wiki/secrets.json"
     ENABLE_LOGGING = True
 
     @staticmethod

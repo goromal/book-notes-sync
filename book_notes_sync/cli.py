@@ -10,7 +10,7 @@ from book_notes_sync.sync import syncBookNotes
 @click.option(
     "--docs-secrets-file",
     "docs_secrets_file",
-    type=click.Path(exists=True),
+    type=click.Path(),
     default=BNSD.DOCS_SECRETS_FILE,
     show_default=True,
     help="Google Docs client secrets file.",
@@ -86,14 +86,14 @@ def sync(ctx: click.Context, docs_id, page_id):
 @click.option(
     "--sync-csv",
     "sync_csv",
-    type=click.Path(exists=True),
-    default=os.path.expanduser("~/configs/book-notes.csv"),
+    type=click.Path(),
+    default="~/configs/book-notes.csv",
     show_default=True,
     help="CSV specifying (docs-id, page-id) pairs.",
 )
 def sync_from_csv(ctx: click.Context, sync_csv):
     """Sync a list of Google Docs with DokuWiki pages from a CSV."""
-    with open(sync_csv, "r") as csvfile:
+    with open(os.path.expanduser(sync_csv), "r") as csvfile:
         reader = csv.reader(csvfile)
         try:
             syncBookNotes([(line[0], line[1]) for line in reader], **ctx.obj)
