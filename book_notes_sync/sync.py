@@ -12,7 +12,8 @@ def syncBookNotes(sync_ids: List[Tuple[str, str]], **kwargs) -> None:
     docs_secrets_file = BNSD.getKwargsOrDefault("docs_secrets_file", **kwargs)
     docs_refresh_token = BNSD.getKwargsOrDefault("docs_refresh_token", **kwargs)
     wiki_url = BNSD.getKwargsOrDefault("wiki_url", **kwargs)
-    wiki_secrets_file = BNSD.getKwargsOrDefault("wiki_secrets_file", **kwargs)
+    wiki_user = kwargs["wiki_user"]
+    wiki_pass = kwargs["wiki_pass"]
     enable_logging = BNSD.getKwargsOrDefault("enable_logging", **kwargs)
 
     if enable_logging:
@@ -21,7 +22,7 @@ def syncBookNotes(sync_ids: List[Tuple[str, str]], **kwargs) -> None:
     
     service = getGoogleService("docs", "v1", docs_secrets_file, docs_refresh_token, headless=True)
 
-    wikitools = WikiTools(wiki_url=wiki_url, wiki_secrets_file=wiki_secrets_file, enable_logging=enable_logging)
+    wikitools = WikiTools(wiki_url=wiki_url, wiki_user=wiki_user, wiki_pass=wiki_pass, enable_logging=enable_logging)
 
     for docs_id, wiki_id in sync_ids:
         document = None

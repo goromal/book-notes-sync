@@ -32,12 +32,18 @@ from book_notes_sync.sync import syncBookNotes
     help="URL of the DokuWiki instance (https).",
 )
 @click.option(
-    "--wiki-secrets-file",
-    "wiki_secrets_file",
+    "--wiki-user",
+    "wiki_user",
     type=str,
-    default=BNSD.WIKI_SECRETS_FILE,
-    show_default=True,
-    help="Path to the DokuWiki login secrets JSON file.",
+    required=True,
+    help="Wiki account username.",
+)
+@click.option(
+    "--wiki-pass",
+    "wiki_pass",
+    type=str,
+    required=True,
+    help="Wiki account password.",
 )
 @click.option(
     "--enable-logging",
@@ -47,13 +53,14 @@ from book_notes_sync.sync import syncBookNotes
     show_default=True,
     help="Whether to enable logging.",
 )
-def cli(ctx: click.Context, docs_secrets_file, docs_refresh_token, wiki_url, wiki_secrets_file, enable_logging):
+def cli(ctx: click.Context, docs_secrets_file, docs_refresh_token, wiki_url, wiki_user, wiki_pass, enable_logging):
     """Synchronize Google Docs book notes with corresponding DokuWiki notes."""
     ctx.obj = {
         "docs_secrets_file": docs_secrets_file,
         "docs_refresh_token": docs_refresh_token,
         "wiki_url": wiki_url,
-        "wiki_secrets_file": wiki_secrets_file,
+        "wiki_user": wiki_user,
+        "wiki_pass": wiki_pass,
         "enable_logging": enable_logging,
     }
 
